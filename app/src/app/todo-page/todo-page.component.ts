@@ -14,9 +14,9 @@ export class TodoPageComponent {
     category: 'Test',
     dueDate: '2023-10-10',
     dueTime: '12:00',
-    priority: 'High'
-  }
+    priority: 'High',
 
-  d = "t"
+    isCompleted: false,
+  }
 
 }

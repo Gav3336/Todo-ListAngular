@@ -4,6 +4,7 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
-    "hono": "npm:hono@^4.7.10"
+    "hono": "npm:hono@^4.7.10",
+    "zod": "npm:zod@^3.24.4"
   }
 }

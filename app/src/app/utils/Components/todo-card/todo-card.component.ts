@@ -13,10 +13,8 @@ export class TodoCardComponent {
   
   data = input.required<todoCardInterface>();
 
-  readonly isCompleted = signal<boolean>(false);
-
   toggleCompletion() {
-    this.isCompleted.set(!this.isCompleted());
+    this.data().isCompleted = !this.data().isCompleted;
   }
 }
 

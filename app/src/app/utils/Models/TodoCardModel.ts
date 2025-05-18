@@ -7,4 +7,5 @@ export interface todoCardInterface {
   dueTime: string;
 
   priority: string;
+  isCompleted: boolean;
 }
