@@ -15,7 +15,7 @@ enum StatusCode {
 // Custom error types to handle different scenarios
 export class AppError extends Error {
   statusCode: number;
-  
+
   constructor(message: string, statusCode: number) {
     super(message);
     this.statusCode = statusCode;
@@ -62,20 +62,20 @@ export const errorHandler: MiddlewareHandler = async (c: Context, next: Next) =>
     await next();
   } catch (error) {
     console.error("Error caught by middleware:", error);
-    
+
     const response: ErrorResponse = {
       success: false,
       message: "Something went wrong"
     };
-    
+
     let statusCode = StatusCode.INTERNAL_SERVER_ERROR;
-    
+
     if (error instanceof AppError) {
       response.message = error.message;
       statusCode = error.statusCode;
     } else if (error instanceof Error) {
       response.message = error.message;
-      
+
       // Optional: Add detailed errors in development environment
       if (process.env.NODE_ENV === "development") {
         response.errors = {
@@ -83,10 +83,10 @@ export const errorHandler: MiddlewareHandler = async (c: Context, next: Next) =>
         };
       }
     }
-    
+
     // Log error for debugging
     console.error(`[${statusCode}] ${response.message}`);
-    
+
     return c.json(response, statusCode as StatusCode);
   }
 };

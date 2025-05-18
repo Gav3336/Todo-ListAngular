@@ -7,7 +7,7 @@ export interface userDataInterface {
 }
 
 export const loginDataSchema = z.object({
-  username: z.string().email().optional(),
+  username: z.string(),
   password: z.string().min(8),
 })
 

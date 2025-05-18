@@ -92,3 +92,68 @@ user.post('/signup', validator('form', async (_value, c) => {
         }, StatusCode.CREATED
     )
 })
+
+user.post('/login', validator('form', async (_value, c) => {
+    if (!c.req.json) {
+        return c.json(
+            {
+                message: "Invalid request",
+                errors: {
+                    body: "Request body is not JSON",
+                },
+            }, StatusCode.BAD_REQUEST
+        )
+    }
+
+    const bodyData = await c.req.json()
+    const parsed = userValidation.loginDataSchema.safeParse(bodyData)
+    if (!parsed.success) {
+        console.log("Validation error: ", parsed.error.flatten().fieldErrors)
+        return c.json(
+            {
+                message: "Validation error",
+                errors: parsed.error.flatten().fieldErrors,
+            },
+            StatusCode.BAD_REQUEST
+        )
+    }
+    return parsed.data
+}
+), async (c) => {
+    const body = c.req.valid('form')
+
+    let token: string = ''
+
+    try {
+        token = await userManager.login(body) || ''
+
+        if (token === '')
+            return c.json(
+                {
+                    message: "Error logging in",
+                    errors: {
+                        body: "Error logging in",
+                    },
+                }, StatusCode.INTERNAL_SERVER_ERROR
+            )
+    } catch (err) {
+        console.log("Error during login (usersRoute.ts): ", err)
+        return c.json(
+            {
+                message: "Error during login",
+                errors: {
+                    body: "Error during login",
+                },
+            }, StatusCode.INTERNAL_SERVER_ERROR
+        )
+    }
+
+    setAuthCookie(c, token)
+
+    return c.json(
+        {
+            message: "User logged in successfully",
+            data: token,
+        }, StatusCode.OK
+    )
+})
