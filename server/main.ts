@@ -1,10 +1,13 @@
 import { Hono } from 'npm:hono';
-import { errorHandler } from "./Handlers/ErrorHandlerMiddleware.ts";
 import { ConnectionTest } from "./Handlers/mysql/MySQLDBConnectorHandler.ts";
+
+import { user } from "./Routes/usersRoute.ts";
+import { todo } from "./Routes/todoRoute.ts";
+import { category } from "./Routes/categoryRoute.ts";
 
 const app = new Hono();
 
-app.use('*', errorHandler);
+// app.use('/*', errorHandler);
 
 async function testConnection() {
   try {
@@ -15,5 +18,9 @@ async function testConnection() {
   }
 }
 testConnection();
+
+app.route('/users', user);
+app.route('/todos', todo);
+app.route('/categories', category);
 
 Deno.serve({ port: 3000 }, app.fetch);

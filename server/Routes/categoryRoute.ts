@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-const category = new Hono();
+export const category = new Hono();
 
 // Get All Categories of a User
 category.get("/categories/:userId", (c) => {

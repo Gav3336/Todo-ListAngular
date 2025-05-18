@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-const todo = new Hono();
+export const todo = new Hono();
 
 // Get All Todos of a User
 todo.get("/todos/:userId", (c) => {

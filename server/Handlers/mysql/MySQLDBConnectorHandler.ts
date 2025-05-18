@@ -1,13 +1,14 @@
 import mysql from "npm:mysql2@^2.3.3/promise";
 
-let connection: mysql.Connection;
+export let connection: mysql.Connection;
 
 export async function createConnection() {
   try {
     connection = await mysql.createConnection({
       host: "localhost",
-      user: "user",
-      password: "pass",
+      user: "root",
+      password: "root",
+      database: "todoDB",
     });
     console.log("Database connection established successfully");
     return true;
