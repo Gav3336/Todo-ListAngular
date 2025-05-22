@@ -2,7 +2,7 @@
     <div class="p-4">
         <div class="flex items-start">
             <div class="flex-shrink-0">
-                <input type="checkbox" id="checkbox" name="checkbox" [checked]="isCompleted()"
+                <input type="checkbox" id="checkbox" name="checkbox" [checked]="data().isCompleted"
                     class="h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 dark:border-gray-600 dark:bg-gray-700">
             </div>
             <div class="ml-3 flex-1">
@@ -51,7 +51,7 @@
                 Delete
             </button>
         </div>
-        @if (isCompleted()) {
+        @if (data().isCompleted) {
         <span
             class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
             Completed

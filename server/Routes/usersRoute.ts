@@ -77,7 +77,7 @@ user.post('/signup', validator('form', async (_value, c) => {
             {
                 message: "Error during signup",
                 errors: {
-                    body: "Error during signup",
+                    body: (err as Error).message,
                 },
             }, StatusCode.INTERNAL_SERVER_ERROR
         )

@@ -1,19 +1,34 @@
 import { Hono } from "hono";
+import { verifyJWT } from "../Handlers/mysql/jwtManager.ts";
+import { getTodos } from "../Handlers/mysql/TodoManager.ts";
+import { Token } from "../Models/Token.ts";
 
 export const todo = new Hono();
 
 // Get All Todos of a User
-todo.get("/todos/:userId", (c) => {
-  const userId = c.req.param("userId");
-  return c.json({ message: `Get all todos for user with ID: ${userId}` });
+todo.get("/", async (c) => {
+  const userToken = c.req.header("Authorization");
+  console.log(userToken);
+
+  if (!userToken) return c.json({ message: "Token is required" }, 401);
+
+  try {
+    const decoded = await verifyJWT(userToken);
+    console.log(decoded);
+    const todos = await getTodos(decoded as Token);
+    return c.json({ message: todos });
+  } catch (err) {
+    console.log(err);
+    return c.json({ message: "Invalid token" }, 401);
+  }
 });
 
 // Get a Todo
 todo.get("/todos/:userId/:todoId", (c) => {
-    const userId = c.req.param("userId");
-    const todoId = c.req.param("todoId");
-    return c.json({ message: `Get todo with ID: ${todoId} for user with ID: ${userId}` });
-    }
+  const userId = c.req.param("userId");
+  const todoId = c.req.param("todoId");
+  return c.json({ message: `Get todo with ID: ${todoId} for user with ID: ${userId}` });
+}
 );
 
 // Create a Todo

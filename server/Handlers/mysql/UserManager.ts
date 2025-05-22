@@ -40,7 +40,13 @@ export async function signup(userData: userValidation.userDataInterface): Promis
             userData.username,
             derivedKey.toString('hex'),
             salt
-        ]);
+        ]).catch((err) => {
+            if(err.errno === 1062) {
+                throw new Error("Username already exists");
+            }
+            console.log("Error in signup process (userManager.ts): ", err);
+            throw new Error("Error in signup process");
+        });
 
         return await createJWT(userData);
     } catch (err) {

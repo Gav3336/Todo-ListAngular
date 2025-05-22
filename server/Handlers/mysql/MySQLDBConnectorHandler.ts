@@ -9,9 +9,11 @@ export async function createConnectionPool() {
       try {
         await pool.query('SELECT 1');
         return true; // Pool still valid
-      } catch (err) {
+      } catch (_err) {
         console.log("Previous connection pool no longer valid, creating new pool");
         // Connection pool not valid, will create a new one
+        await pool.end();
+        pool = null;
       }
     }
 
