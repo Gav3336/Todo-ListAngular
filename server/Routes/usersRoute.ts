@@ -142,7 +142,7 @@ user.post('/login', validator('form', async (_value, c) => {
             {
                 message: "Error during login",
                 errors: {
-                    body: "Error during login",
+                    body: (err as Error).message,
                 },
             }, StatusCode.INTERNAL_SERVER_ERROR
         )

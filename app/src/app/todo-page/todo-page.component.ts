@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TodoCardComponent } from '../utils/Components/todo-card/todo-card.component';
+import { TodoManagerService } from '../utils/Services/TodoManager/todo-manager.service';
 
 @Component({
   selector: 'app-todo-page',
@@ -8,6 +9,7 @@ import { TodoCardComponent } from '../utils/Components/todo-card/todo-card.compo
   styleUrl: './todo-page.component.css'
 })
 export class TodoPageComponent {
+  #todoManager = inject(TodoManagerService);
   test = {
     title: 'Test',
     description: 'Test',

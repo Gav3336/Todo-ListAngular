@@ -15,12 +15,17 @@ export class TodoManagerService {
 
 
   constructor() {
-
+    this.TodoViaRestApi();
   }
 
   TodoViaRestApi() {
-    this.#http.get<todoCardInterface[]>(this.#link).subscribe((todos) => {
-      this.todos.set(todos);
+    this.#http.get<todoCardInterface[]>(this.#link).subscribe({
+      next: (todos: todoCardInterface[]) => {
+        this.todos.set(todos);
+      },
+      error: (error: any) => {
+        console.error('Error fetching todos:', error);
+      }
     });
   }
 }

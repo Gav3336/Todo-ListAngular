@@ -2,12 +2,13 @@ import { Hono } from "hono";
 import { verifyJWT } from "../Handlers/mysql/jwtManager.ts";
 import { getTodos } from "../Handlers/mysql/TodoManager.ts";
 import { Token } from "../Models/Token.ts";
+import { getCookie } from "hono/cookie";
 
 export const todo = new Hono();
 
 // Get All Todos of a User
 todo.get("/", async (c) => {
-  const userToken = c.req.header("Authorization");
+  const userToken = getCookie(c, "Authorization");
   console.log(userToken);
 
   if (!userToken) return c.json({ message: "Token is required" }, 401);

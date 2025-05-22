@@ -1,11 +1,15 @@
 import { Hono } from 'npm:hono';
 import { createConnectionPool, closePool } from "./Handlers/mysql/MySQLDBConnectorHandler.ts";
 
+import { cors } from 'hono/cors'
+
 import { user } from "./Routes/usersRoute.ts";
 import { todo } from "./Routes/todoRoute.ts";
 import { category } from "./Routes/categoryRoute.ts";
 
 const app = new Hono();
+
+app.use('/*', cors());
 
 // app.use('/*', errorHandler);
 
