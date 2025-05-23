@@ -20,7 +20,6 @@ export class TodoManagerService {
   TodoViaRestApi() {
     this.#http.get<any>(`${this.#link}/all`).subscribe({
       next: (todos: any) => {
-        console.log(todos);
         this.todos.set(todos.message);
       },
       error: (error: any) => {

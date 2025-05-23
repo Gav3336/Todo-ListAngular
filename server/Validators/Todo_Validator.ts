@@ -13,7 +13,7 @@ export const TodoValidator = z.object({
     category_name: z.string(),
     priority: z.enum(['low', 'medium', 'high']).optional(),
     dueDate: z.string().date(),
-    dueTime: z.string().optional(),
+    dueTime: z.string().time(),
     user_id: z.number(),
     completed: z.boolean(),
 });
