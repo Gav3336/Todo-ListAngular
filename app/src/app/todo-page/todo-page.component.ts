@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { TodoCardComponent } from '../utils/Components/todo-card/todo-card.component';
 import { TodoManagerService } from '../utils/Services/TodoManager/todo-manager.service';
 
@@ -10,6 +10,10 @@ import { TodoManagerService } from '../utils/Services/TodoManager/todo-manager.s
 })
 export class TodoPageComponent {
   #todoManager = inject(TodoManagerService);
+
+  todoList = computed(() => this.#todoManager.todosComputed());
+
+
   test = {
     title: 'Test',
     description: 'Test',

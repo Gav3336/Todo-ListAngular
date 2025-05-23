@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TodoManagerService {
   todos = signal<todoCardInterface[]>([]);
-
   todosComputed = computed(() => this.todos());
 
   #http = inject(HttpClient);
@@ -19,9 +18,10 @@ export class TodoManagerService {
   }
 
   TodoViaRestApi() {
-    this.#http.get<todoCardInterface[]>(this.#link).subscribe({
-      next: (todos: todoCardInterface[]) => {
-        this.todos.set(todos);
+    this.#http.get<any>(`${this.#link}/all`).subscribe({
+      next: (todos: any) => {
+        console.log(todos);
+        this.todos.set(todos.message);
       },
       error: (error: any) => {
         console.error('Error fetching todos:', error);

@@ -36,7 +36,7 @@ export async function getTodosWithoutToken() {
     }
 
     const pool = getPool();
-    const query = 'SELECT * FROM TodoTable';
+    const query = 'SELECT * FROM TodoTable join CategoryTable on TodoTable.category_id = CategoryTable.id';
     try{
     const [rows] = await pool.query(query);
         // deno-lint-ignore no-explicit-any

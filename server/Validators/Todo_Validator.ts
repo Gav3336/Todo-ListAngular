@@ -10,6 +10,7 @@ export const TodoValidator = z.object({
     title: z.string().min(3).max(40),
     description: z.string().max(120).optional(),
     category_id: z.number(),
+    category_name: z.string(),
     priority: z.enum(['low', 'medium', 'high']).optional(),
     dueDate: z.string().date(),
     dueTime: z.string().optional(),
