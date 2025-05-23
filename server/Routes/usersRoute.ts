@@ -93,6 +93,9 @@ user.post('/signup', validator('form', async (_value, c) => {
     )
 })
 
+
+// TODO: Add a check to see if the user is already logged in
+// TODO: Add a check to see if the user has put valid credentials
 user.post('/login', validator('form', async (_value, c) => {
     if (!c.req.json) {
         return c.json(

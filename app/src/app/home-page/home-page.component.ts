@@ -2,6 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { UserManagerService } from '../utils/Services/UserManager/user-manager.service';
 import { userInterface } from '../utils/Models/UserModel';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home-page',
   imports: [ReactiveFormsModule],
@@ -11,6 +12,8 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 export class HomePageComponent {
   #userManager = inject(UserManagerService);
   token = computed(() => this.#userManager.tokenComputed());
+
+  #router = inject(Router);
 
   signupForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -25,8 +28,8 @@ export class HomePageComponent {
   async login() {
     try {
       await this.#userManager.login(this.loginForm.value as userInterface);
-      console.log(this.token());
       document.cookie = `Authorization=${this.token()}`;
+      this.#router.navigate(['/todo-page']);
     } catch (error) {
       console.error('Error logging in:', error);
     }
@@ -35,8 +38,8 @@ export class HomePageComponent {
   async signup() {
     try {
       await this.#userManager.signup(this.signupForm.value as userInterface);
-      console.log(this.token());
       document.cookie = `Authorization=${this.token()}`;
+      this.#router.navigate(['/todo-page']);
     } catch (error) {
       console.error('Error signing up:', error);
     }

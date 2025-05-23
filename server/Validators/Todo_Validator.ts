@@ -15,8 +15,6 @@ export const TodoValidator = z.object({
     dueTime: z.string().optional(),
     user_id: z.number(),
     completed: z.boolean(),
-    createdAt: z.string().optional(),
-    updatedAt: z.string().optional(),
 });
 
 /**
@@ -31,4 +29,4 @@ export const TodosValidator = z.array(TodoValidator);
 /**
  * a type that is used to validate the Todo object.
  */
-export type inferTodo = z.infer<typeof TodoValidator>;
+export type TodoInterface = z.infer<typeof TodoValidator>;

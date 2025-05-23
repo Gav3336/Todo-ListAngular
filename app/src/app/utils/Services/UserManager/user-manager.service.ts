@@ -24,10 +24,12 @@ export class UserManagerService {
       this.#http.post<any>(`${this.#link}/signup`, user).subscribe({
         next: (res) => {
           this.#token.set(res.data);
+          this.#loggedIn.set(true);
           resolve(res.data);
         },
         error: (error) => {
           console.error('Error signing up:', error.error.errors.body);
+          this.#loggedIn.set(false);
           reject(error);
         }
       });
@@ -35,15 +37,19 @@ export class UserManagerService {
   }
 
   login(user: userInterface) {
-    this.#http.post<any>(`${this.#link}/login`, user).subscribe({
-      next: (res) => {
-        this.#token.set(res.data);
-        this.#loggedIn.set(true);
-        return res;
-      },
-      error: (error) => {
-        console.log('Error logging in:', error.error.errors.body);
-      }
+    return new Promise((resolve, reject) => {
+      this.#http.post<any>(`${this.#link}/login`, user).subscribe({
+        next: (res) => {
+          this.#token.set(res.data);
+          this.#loggedIn.set(true);
+          resolve(res.data);
+        },
+        error: (error) => {
+          console.error('Error logging in:', error.error.errors.body);
+          this.#loggedIn.set(false);
+          throw error;
+        }
+      });
     });
   }
 
