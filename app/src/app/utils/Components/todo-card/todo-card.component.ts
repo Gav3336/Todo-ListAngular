@@ -11,7 +11,6 @@ import { DatePipe } from '@angular/common';
 })
 
 export class TodoCardComponent {
-
   data = input.required<todoCardInterface>();
 
   toggleCompletion() {

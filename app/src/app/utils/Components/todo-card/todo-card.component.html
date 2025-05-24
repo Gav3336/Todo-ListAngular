@@ -8,10 +8,32 @@
       <div class="ml-3 flex-1">
         <div class="flex items-center justify-between">
           <h4 class="text-base font-medium text-gray-900 dark:text-white">{{data().title}}</h4>
+          @switch (data().priority) {
+          @case ('HIGH') {
           <span
             class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
             {{data().priority}}
           </span>
+          }
+          @case ('MEDIUM') {
+          <span
+            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+            {{data().priority}}
+          </span>
+          }
+          @case ('LOW') {
+          <span
+            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+            {{data().priority}}
+          </span>
+          }
+          @default {
+          <span
+            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+            {{data().priority}}
+          </span>
+          }
+          }
         </div>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{data().description}}</p>
         <div class="mt-2 flex items-center justify-between">

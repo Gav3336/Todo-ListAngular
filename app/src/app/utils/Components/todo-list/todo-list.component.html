@@ -1,0 +1,44 @@
+<!-- Task Cards -->
+<div class="space-y-4">
+
+  <!-- Today's Tasks -->
+  <div class="mb-8">
+    <div class="flex items-center mb-4">
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Today</h3>
+      <div class="ml-2 text-sm text-gray-500 dark:text-gray-400">{{today | date:'fullDate'}}</div>
+      <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">3 tasks</div>
+    </div>
+
+    @for (todo of todayTasks(); track todo.id) {
+    <app-todo-card [data]="todo"></app-todo-card>
+    }
+
+  </div>
+
+  <!-- Tomorrow's Tasks -->
+  <div class="mb-8 mt-8">
+    <div class="flex items-center mb-4">
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tomorrow</h3>
+      <div class="ml-2 text-sm text-gray-500 dark:text-gray-400">{{tomorrow | date:'fullDate'}}</div>
+      <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">2 tasks</div>
+    </div>
+
+    @for (todo of tomorrowTasks(); track todo.id) {
+    <app-todo-card [data]="todo"></app-todo-card>
+    }
+
+    <!-- After Tomorrow's Tasks -->
+    <div class="mb-8 mt-8">
+      <div class="flex items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">After Tomorrow</h3>
+        <div class="ml-2 text-sm text-gray-500 dark:text-gray-400">{{afterTomorrow | date:'fullDate'}}</div>
+        <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">4 tasks</div>
+      </div>
+
+      @for (todo of afterTomorrowTasks(); track todo.id) {
+      <app-todo-card [data]="todo"></app-todo-card>
+      }
+    </div>
+  </div>
+
+</div>

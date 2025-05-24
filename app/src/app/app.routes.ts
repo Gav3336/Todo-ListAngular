@@ -6,4 +6,5 @@ export const routes: Routes = [
     {path: '', redirectTo: 'todo-page', pathMatch: 'full'},
     {path: 'home', component: HomePageComponent},
     {path: 'todo-page', component: TodoPageComponent},
+    {path: '**', redirectTo: 'todo-page', pathMatch: 'full'},
 ];

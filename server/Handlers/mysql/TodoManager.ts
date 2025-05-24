@@ -36,7 +36,7 @@ export async function getTodosWithoutToken() {
     }
 
     const pool = getPool();
-    const query = 'SELECT * FROM TodoTable join CategoryTable on TodoTable.category_id = CategoryTable.id';
+    const query = 'SELECT * FROM TodoTable join CategoryTable on TodoTable.category_id = CategoryTable.id where TodoTable.user_id = 1';
     try{
     const [rows] = await pool.query(query);
         // deno-lint-ignore no-explicit-any
@@ -63,8 +63,8 @@ export async function createTodo(todo: TodoInterface) {
 
     try{
         const pool = getPool();
-        const query = 'INSERT INTO TodoTable (title, description, category_id, priority, dueDate, dueTime, user_id, completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueDate, todo.dueTime, todo.user_id, todo.completed]);
+        const query = 'INSERT INTO TodoTable (title, description, category_id, priority, dueTime, user_id, completed) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.user_id, todo.completed]);
         return "Todo created successfully";
     } catch (err) {
         console.log(err);
@@ -88,8 +88,8 @@ export async function updateTodo(todoId: number, todo: TodoInterface) {
 
     try{
         const pool = getPool();
-        const query = 'UPDATE TodoTable SET title = ?, description = ?, category_id = ?, priority = ?, dueDate = ?, dueTime = ?, completed = ?, updatedAt = NOW() WHERE id = ?';
-        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueDate, todo.dueTime, todo.completed, todoId]);
+        const query = 'UPDATE TodoTable SET title = ?, description = ?, category_id = ?, priority = ?, dueTime = ?, completed = ?, updatedAt = NOW() WHERE id = ?';
+        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.completed, todoId]);
         return "Todo updated successfully";
     } catch (err) {
         console.log(err);
