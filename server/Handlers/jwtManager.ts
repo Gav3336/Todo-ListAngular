@@ -1,6 +1,6 @@
 import jwt from 'npm:jsonwebtoken';
 
-import { LoginDataInterface } from "../../Validators/User_Validator.ts"
+import { LoginDataInterface } from "../Validators/User_Validator.ts"
 
 export async function createJWT(loginData: LoginDataInterface): Promise<string> {
     try {

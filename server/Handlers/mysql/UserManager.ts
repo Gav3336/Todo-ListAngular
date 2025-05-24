@@ -1,6 +1,6 @@
 import * as userValidation from "../../Validators/User_Validator.ts";
 import { Buffer } from "node:buffer";
-import { createJWT, verifyJWT } from "./jwtManager.ts";
+import { createJWT, verifyJWT } from "../jwtManager.ts";
 
 import { getPool, createConnectionPool } from "./MySQLDBConnectorHandler.ts";
 

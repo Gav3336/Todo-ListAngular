@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { verifyJWT } from "../Handlers/mysql/jwtManager.ts";
+import { verifyJWT } from "../Handlers/jwtManager.ts";
 import { createTodo, deleteTodo, getTodosWithToken, getTodosWithoutToken, updateTodo } from "../Handlers/mysql/TodoManager.ts";
 import { Token } from "../Models/Token.ts";
 import { getCookie } from "hono/cookie";

@@ -1,26 +1,16 @@
 import { Hono } from "hono";
 
+import { getCategories } from "../Handlers/mysql/categoryManager.ts";
+
 export const category = new Hono();
 
-// Get All Categories of a User
-category.get("/categories/:userId", (c) => {
-    const userId = c.req.param("userId");
-    return c.json({ message: `Get all categories for user with ID: ${userId}` });
+// Get All Categories
+category.get("/", async (c) => {
+    try {
+        const categories = await getCategories();
+        return c.json({ message: categories });
+    } catch (err) {
+        console.log(err);
+        return c.json({ message: (err as Error).message }, 500);
     }
-);
-
-// Get a Category
-category.get("/categories/:userId/:categoryId", (c) => {
-    const userId = c.req.param("userId");
-    const categoryId = c.req.param("categoryId");
-    return c.json({ message: `Get category with ID: ${categoryId} for user with ID: ${userId}` });
-    }
-);
-
-// Create a Category
-category.post("/categories/:userId", (c) => {
-    const userId = c.req.param("userId");
-    const categoryData = c.req.json();
-    return c.json({ message: "Category created", data: categoryData, userId });
-    }
-);
+});

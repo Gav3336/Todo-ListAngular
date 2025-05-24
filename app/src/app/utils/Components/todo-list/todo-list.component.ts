@@ -11,7 +11,6 @@ import { DatePipe } from '@angular/common';
 })
 export class TodoListComponent {
   #todoManager = inject(TodoManagerService);
-
   #todoList = computed(() => this.#todoManager.todosComputed());
 
   today = new Date();
@@ -41,13 +40,5 @@ export class TodoListComponent {
       return todoDateStr > tomorrowDateStr;
     })
   );
-
-  constructor() {
-    setTimeout(() => {
-      console.log(this.todayTasks());
-      console.log(this.tomorrowTasks());
-      console.log(this.afterTomorrowTasks());
-    }, 1000);
-  }
 
 }
