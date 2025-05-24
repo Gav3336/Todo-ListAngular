@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { CategoryManagerService } from '../../Services/CategoryMenager/category-manager.service';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { TodoManagerService } from '../../Services/TodoManager/todo-manager.service';
 
 @Component({
@@ -14,7 +14,10 @@ export class AddTodoComponent {
   #todoManager = inject(TodoManagerService);
   categories = computed(() => this.#categoryManager.categoriesComputed());
 
-  addTodoForm = new FormGroup({
+  #formBuilder = inject(FormBuilder);
+
+  // TODO: Add validation to not allow user to let empty fields
+  addTodoForm = this.#formBuilder.group({
     title: new FormControl('', [Validators.required]),
     description: new FormControl(''),
     category_id: new FormControl('', [Validators.required]),

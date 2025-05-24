@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { verifyJWT } from "../Handlers/jwtManager.ts";
-import { createTodo, deleteTodo, getTodosWithToken, getTodosWithoutToken, updateTodo } from "../Handlers/mysql/TodoManager.ts";
+import { createTodo, deleteTodo, getTodosWithToken, getTodosWithoutToken, getTotalTodos, updateTodo } from "../Handlers/mysql/TodoManager.ts";
 import { Token } from "../Models/Token.ts";
 import { getCookie } from "hono/cookie";
 import { TodoValidator } from "../Validators/Todo_Validator.ts";
@@ -41,6 +41,16 @@ todo.get("/all", async (c) => {
   try {
     const todos = await getTodosWithoutToken();
     return c.json({ message: todos });
+  } catch (err) {
+    console.log(err);
+    return c.json({ message: (err as Error).message }, 500);
+  }
+});
+
+todo.get("/total", async (c) => {
+  try{
+    const total = await getTotalTodos();
+    return c.json({ message: total });
   } catch (err) {
     console.log(err);
     return c.json({ message: (err as Error).message }, 500);

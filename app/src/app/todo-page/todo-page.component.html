@@ -84,23 +84,24 @@
 
       <!-- Right Side: Task Cards -->
       <div class="lg:w-2/3">
+
         <!-- Task Summary Stats -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tasks</div>
-            <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">12</div>
+            <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">{{totalTodos()}}</div>
           </div>
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Completed</div>
-            <div class="mt-1 text-2xl font-semibold text-emerald-600 dark:text-emerald-400">5</div>
+            <div class="mt-1 text-2xl font-semibold text-emerald-600 dark:text-emerald-400">-</div>
           </div>
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div class="text-sm font-medium text-gray-500 dark:text-gray-400">In Progress</div>
-            <div class="mt-1 text-2xl font-semibold text-blue-600 dark:text-blue-400">3</div>
+            <div class="mt-1 text-2xl font-semibold text-blue-600 dark:text-blue-400">-</div>
           </div>
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Overdue</div>
-            <div class="mt-1 text-2xl font-semibold text-red-600 dark:text-red-400">4</div>
+            <div class="mt-1 text-2xl font-semibold text-red-600 dark:text-red-400">-</div>
           </div>
         </div>
 
