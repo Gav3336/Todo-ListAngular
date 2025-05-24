@@ -9,7 +9,7 @@
       <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">{{todayTasks().length}} tasks</div>
     </div>
 
-    @for (todo of todayTasks(); track todo.id) {
+    @for (todo of todayTasks(); track $index) {
     <app-todo-card [data]="todo"></app-todo-card>
     }
 
@@ -23,7 +23,7 @@
       <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">{{tomorrowTasks().length}} tasks</div>
     </div>
 
-    @for (todo of tomorrowTasks(); track todo.id) {
+    @for (todo of tomorrowTasks(); track $index) {
     <app-todo-card [data]="todo"></app-todo-card>
     }
 
@@ -34,7 +34,7 @@
         <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">{{afterTomorrowTasks().length}} tasks</div>
       </div>
 
-      @for (todo of afterTomorrowTasks(); track todo.id) {
+      @for (todo of afterTomorrowTasks(); track $index) {
       <app-todo-card [data]="todo"></app-todo-card>
       }
     </div>
