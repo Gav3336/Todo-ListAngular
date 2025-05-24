@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { todoCardInterface } from '../../Models/TodoCardModel';
 import { HttpClient } from '@angular/common/http';
+import { TodoModel } from '../../Models/TodoModel';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,17 @@ export class TodoManagerService {
       },
       error: (error: any) => {
         console.error('Error fetching todos:', error);
+      }
+    });
+  }
+
+  addTodo(todo: TodoModel) {
+    this.#http.post<any>(`${this.#link}`, todo).subscribe({
+      next: (todo: any) => {
+        this.todos.set([...this.todos(), todo.message]);
+      },
+      error: (error: any) => {
+        console.error('Error adding todo:', error);
       }
     });
   }

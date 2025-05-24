@@ -9,12 +9,15 @@ import { z } from 'npm:zod';
 export const TodoValidator = z.object({
     title: z.string().min(3).max(40),
     description: z.string().max(120).optional(),
-    category_id: z.number(),
-    category_name: z.string(),
+    category_id: z.number().default(1),
+    category_name: z.string().optional(),
     priority: z.enum(['low', 'medium', 'high']).optional(),
-    dueTime: z.string().datetime(),
-    user_id: z.number(),
-    completed: z.boolean(),
+    dueTime: z.string().datetime().transform((date) => {
+        // Convert to MySQL datetime format (YYYY-MM-DD HH:mm:ss)
+        return new Date(date).toISOString().slice(0, 19).replace('T', ' ');
+    }),
+    user_id: z.number().default(1),
+    completed: z.boolean().default(false),
 });
 
 /**

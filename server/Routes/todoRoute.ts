@@ -57,8 +57,17 @@ todo.post("/", async (c) => {
   // const userId = c.req.param("userId");
   const todoData = await c.req.json();
 
+  console.log(todoData);
+
   // force the user_id to be 1 for the moment since there isn't a way to login or register
   todoData.user_id = 1;
+
+  try{
+    todoData.category_id = parseInt(todoData.category_id);
+  } catch (err) {
+    console.log(err);
+    return c.json({ message: "Invalid category ID" }, 400);
+  }
 
   const parsedTodo = TodoValidator.safeParse(todoData);
 
@@ -66,9 +75,14 @@ todo.post("/", async (c) => {
     return c.json({ message: "Invalid todo data", errors: parsedTodo.error.errors }, 400);
   }
 
-  const todo = await createTodo(parsedTodo.data);
+  try {
+    const todo = await createTodo(parsedTodo.data);
+    return c.json({ message: "Todo created", data: todo });
+  } catch (err) {
+    console.log(err);
+    return c.json({ message: (err as Error).message }, 500);
+  }
 
-  return c.json({ message: "Todo created", data: todo });
 });
 
 // Update a Todo
