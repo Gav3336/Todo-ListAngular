@@ -13,6 +13,9 @@ export class TodoManagerService {
   totalTodos = signal<number>(0);
   totalTodosComputed = computed(() => this.totalTodos());
 
+  filteredTodos = signal<todoCardInterface[]>([]);
+  filteredTodosComputed = computed(() => this.filteredTodos());
+
   #http = inject(HttpClient);
   #link = 'http://localhost:3000/todos';
 
@@ -26,6 +29,7 @@ export class TodoManagerService {
     this.#http.get<any>(`${this.#link}/all`).subscribe({
       next: (todos: any) => {
         this.todos.set(todos.message);
+        this.filteredTodos.set(todos.message);
       },
       error: (error: any) => {
         console.error('Error fetching todos:', error);
@@ -33,11 +37,10 @@ export class TodoManagerService {
     });
   }
 
-  getTodosTotal(){
+  getTodosTotal() {
     this.#http.get<any>(`${this.#link}/total`).subscribe({
       next: (todos: any) => {
         this.totalTodos.set(todos.message[0].total);
-        console.log(this.totalTodos());
       },
       error: (error: any) => {
         console.error('Error fetching todos:', error);
@@ -49,10 +52,25 @@ export class TodoManagerService {
     this.#http.post<any>(`${this.#link}`, todo).subscribe({
       next: (todo: any) => {
         this.todos.set([...this.todos(), todo.message]);
+        this.filteredTodos.set([...this.filteredTodos(), todo.message]);
       },
       error: (error: any) => {
         console.error('Error adding todo:', error);
       }
     });
+  }
+
+
+  // TODO: make category_id accessible in the todoCardInterface
+  filterTodos(categoryId: number, priority: string) {
+    // console.log(this.todos().category_id);
+    this.filteredTodos.set(
+      this.todos().filter(todo => {
+        const matches = (categoryId === 0 || todo.category_id === categoryId) &&
+          (priority === '' || todo.priority.toUpperCase() === priority.toUpperCase());
+        console.log('Todo:', todo, 'Matches:', matches);
+        return matches;
+      })
+    );
   }
 }

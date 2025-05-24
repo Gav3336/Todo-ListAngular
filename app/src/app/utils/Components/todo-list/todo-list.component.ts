@@ -11,14 +11,14 @@ import { DatePipe } from '@angular/common';
 })
 export class TodoListComponent {
   #todoManager = inject(TodoManagerService);
-  #todoList = computed(() => this.#todoManager.todosComputed());
+  #filteredTodos = computed(() => this.#todoManager.filteredTodosComputed());
 
   today = new Date();
   tomorrow = new Date(this.today.getTime() + 24 * 60 * 60 * 1000);
   afterTomorrow = new Date(this.tomorrow.getTime() + 24 * 60 * 60 * 1000);
 
   todayTasks = computed(() =>
-    this.#todoList().filter(todo => {
+    this.#filteredTodos().filter(todo => {
       const todoDateStr = new Date(todo.dueTime).toISOString().split('T')[0];
       const todayDateStr = this.today.toISOString().split('T')[0];
       return todoDateStr === todayDateStr;
@@ -26,7 +26,7 @@ export class TodoListComponent {
   );
 
   tomorrowTasks = computed(() =>
-    this.#todoList().filter(todo => {
+    this.#filteredTodos().filter(todo => {
       const todoDateStr = new Date(todo.dueTime).toISOString().split('T')[0];
       const tomorrowDateStr = this.tomorrow.toISOString().split('T')[0];
       return todoDateStr === tomorrowDateStr;
@@ -34,7 +34,7 @@ export class TodoListComponent {
   );
 
   afterTomorrowTasks = computed(() =>
-    this.#todoList().filter(todo => {
+    this.#filteredTodos().filter(todo => {
       const todoDateStr = new Date(todo.dueTime).toISOString().split('T')[0];
       const tomorrowDateStr = this.tomorrow.toISOString().split('T')[0];
       return todoDateStr > tomorrowDateStr;

@@ -42,39 +42,40 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Filters</h2>
 
           <!-- Filter Options -->
-          <div class="mb-4">
-            <label for="filter-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Filter
-              by Category</label>
-            <select id="filter-category"
-              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white">
-              <option value="">All Categories</option>
-              <option value="work">Work</option>
-              <option value="personal">Personal</option>
-              <option value="home">Home</option>
-              <option value="health">Health</option>
-              <option value="finance">Finance</option>
-            </select>
-          </div>
+          <form [formGroup]="filterForm">
+            <div class="mb-4">
+              <label for="filter-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Filter by Category
+              </label>
+              <select id="filter-category" formControlName="categoryId"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white">
+                <option value="0">All Categories</option>
+                @for (category of categories(); track category.id) {
+                <option value="{{category.id}}">{{category.category_name}}</option>
+                }
+              </select>
+            </div>
 
-          <div class="mb-4">
-            <label for="filter-priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Filter
-              by Priority</label>
-            <select id="filter-priority"
-              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white">
-              <option value="">All Priorities</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-              <option value="urgent">Urgent</option>
-            </select>
-          </div>
+            <div class="mb-4">
+              <label for="filter-priority"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Filter
+                by Priority</label>
+              <select id="filter-priority" formControlName="priority"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white">
+                <option value="">All Priorities</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </form>
 
           <div class="flex items-center mt-4 border-t dark:border-gray-700 pt-4">
-            <button
+            <button (click)="resetFilters()"
               class="flex-1 py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
               Reset Filters
             </button>
-            <button
+            <button (click)="filterTodos()"
               class="flex-1 ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
               Apply Filters
             </button>

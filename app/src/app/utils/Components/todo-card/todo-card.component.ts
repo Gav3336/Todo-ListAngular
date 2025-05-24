@@ -1,4 +1,4 @@
-import { Component, signal, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { todoCardInterface } from '../../Models/TodoCardModel';
 import { DatePipe } from '@angular/common';
 
