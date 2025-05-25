@@ -19,6 +19,9 @@ export class TodoManagerService {
   #overdueTodos = signal<todoCardInterface[]>([]);
   overdueTodosComputed = computed(() => this.#overdueTodos());
 
+  #completedTodos = signal<todoCardInterface[]>([]);
+  completedTodosComputed = computed(() => this.#completedTodos());
+
   #http = inject(HttpClient);
   #link = 'http://localhost:3000/todos';
 
@@ -27,6 +30,7 @@ export class TodoManagerService {
     this.TodoViaRestApi();
     this.getTodosTotal();
     this.getTodosOverdue();
+    this.getTodosCompleted();
   }
 
   TodoViaRestApi() {
@@ -56,6 +60,17 @@ export class TodoManagerService {
     this.#http.get<any>(`${this.#link}/overdue`).subscribe({
       next: (todos: any) => {
         this.#overdueTodos.set(todos.message);
+      }
+    });
+  }
+
+  getTodosCompleted() {
+    this.#http.get<any>(`${this.#link}/completed`).subscribe({
+      next: (todos: any) => {
+        this.#completedTodos.set(todos.message[0].total);
+      },
+      error: (error: any) => {
+        console.error('Error fetching completed todos:', error);
       }
     });
   }

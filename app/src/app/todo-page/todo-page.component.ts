@@ -27,6 +27,8 @@ export class TodoPageComponent {
 
   overdueTodos = computed(() => this.#Todo_manager.overdueTodosComputed().length);
 
+  completedTodos = computed(() => this.#Todo_manager.completedTodosComputed());
+
   filterForm = new FormGroup({
     categoryId: new FormControl(0),
     priority: new FormControl('')

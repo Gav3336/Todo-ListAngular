@@ -158,4 +158,3 @@ This project demonstrates:
 - When adding a task via form an error of the code that prevent the convertion doesn't let the app to add it directly and forcing a refresh of the page
 - If reset filters is clicked then applying the filters again will result in a clean of the task list
 - Missing a login and signup system (fully functional)
-- Missing mark completed function for Task

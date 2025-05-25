@@ -168,6 +168,25 @@ export async function toggleCompletedTodo(todoId: number, isCompleted: string) {
     }
 }
 
+export async function getCompletedTodos() {
+    try {
+        await createConnectionPool();
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error connecting to the database");
+    }
+
+    try {
+        const pool = getPool();
+        const query = 'SELECT COUNT(*) as total FROM TodoTable WHERE isCompleted = 1 and user_id = 1';
+        const [rows] = await pool.query(query);
+        return rows;
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error fetching completed todos");
+    }
+}
+
 /**
  * This function is used to delete a todo
  * @param todoId the id of the todo to delete

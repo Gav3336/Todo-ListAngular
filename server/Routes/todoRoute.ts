@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { verifyJWT } from "../Handlers/jwtManager.ts";
-import { createTodo, deleteTodo, getOverdueTodos, getTodosWithToken, getTodosWithoutToken, getTotalTodos, toggleCompletedTodo, updateTodo } from "../Handlers/mysql/TodoManager.ts";
+import { createTodo, deleteTodo, getCompletedTodos, getOverdueTodos, getTodosWithToken, getTodosWithoutToken, getTotalTodos, toggleCompletedTodo, updateTodo } from "../Handlers/mysql/TodoManager.ts";
 import { Token } from "../Models/Token.ts";
 import { getCookie } from "hono/cookie";
 import { TodoValidator } from "../Validators/Todo_Validator.ts";
@@ -61,6 +61,16 @@ todo.get("/overdue", async (c) => {
   try{
     const overdue = await getOverdueTodos();
     return c.json({ message: overdue });
+  } catch (err) {
+    console.log(err);
+    return c.json({ message: (err as Error).message }, 500);
+  }
+});
+
+todo.get("/completed", async (c) => {
+  try{
+    const completed = await getCompletedTodos();
+    return c.json({ message: completed });
   } catch (err) {
     console.log(err);
     return c.json({ message: (err as Error).message }, 500);
