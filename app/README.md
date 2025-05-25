@@ -4,43 +4,46 @@ A modern, full-stack Todo application built with Angular 19, featuring a clean U
 
 ## 🎯 Project Overview
 
-This project serves as a learning exercise for creating a full-stack web application using the latest version of Angular (v19). It demonstrates modern Angular development practices, component architecture, and responsive design principles.
+This project serves as a comprehensive learning exercise for creating a full-stack web application using the latest version of Angular (v19). It demonstrates modern Angular development practices, component architecture, responsive design principles, and state management patterns.
 
 ## ✨ Features
 
-- ✅ **Todo Management**: Create, view, and manage todo items
-- 🏷️ **Categories**: Organize todos with category system
-- 🎨 **Modern UI**: Clean interface built with PrimeNG and Tailwind CSS
-- 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
-- 🧭 **Navigation**: Multi-page application with routing
-- 🔧 **TypeScript**: Fully typed codebase for better development experience
+- ✅ **Todo Management**: Create, view, edit, and delete todo items
+- 🏷️ **Categories**: Organize todos with a flexible category system
+- 🎨 **Modern UI**: Clean, intuitive interface built with PrimeNG and Tailwind CSS
+- 📱 **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
+- 🧭 **Navigation**: Multi-page application with Angular routing
+- 🔧 **TypeScript**: Fully typed codebase for enhanced development experience
 - 🐳 **Docker Support**: Containerized deployment ready
+- ⚡ **Performance**: Optimized with Angular's latest performance features
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Angular 19** - Latest version of the Angular framework
-- **TypeScript 5.7** - Type-safe JavaScript
-- **PrimeNG 19** - Rich UI component library
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **RxJS 7** - Reactive programming library
+- **Angular 19.2** - Latest version of the Angular framework
+- **TypeScript 5.7** - Type-safe JavaScript with latest features
+- **PrimeNG 19.1** - Rich UI component library
+- **Tailwind CSS 4.1** - Utility-first CSS framework
+- **RxJS 7.8** - Reactive programming library
 
 ### Development Tools
-- **Angular CLI 19** - Command line interface for Angular
-- **Karma & Jasmine** - Testing framework
-- **PostCSS** - CSS processing tool
+- **Angular CLI 19.2** - Command line interface for Angular
+- **Karma & Jasmine** - Testing framework for unit tests
+- **PostCSS 8.5** - CSS processing tool
+- **ESLint & Prettier** - Code linting and formatting
 
 ### Deployment
 - **Docker** - Containerization platform
-- **Node.js 24** - Runtime environment
+- **Node.js 18+** - Runtime environment
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (version 18 or higher)
-- npm or yarn package manager
-- Angular CLI (optional, but recommended)
+- **Node.js** (version 18 or higher) - [Download here](https://nodejs.org/)
+- **npm** or **yarn** package manager
+- **Angular CLI** (optional, but recommended)
+- **Git** for version control
 
 ### Installation
 
@@ -57,7 +60,7 @@ This project serves as a learning exercise for creating a full-stack web applica
 
 3. **Install Angular CLI globally (if not already installed)**
    ```bash
-   npm install -g @angular/cli
+   npm install -g @angular/cli@19
    ```
 
 4. **Start the development server**
@@ -69,6 +72,8 @@ This project serves as a learning exercise for creating a full-stack web applica
 
 5. **Open your browser**
    Navigate to `http://localhost:4200`
+
+The application will automatically reload when you make changes to the source files.
 
 ## 🐳 Docker Deployment
 
@@ -87,6 +92,19 @@ This project serves as a learning exercise for creating a full-stack web applica
 3. **Access the application**
    Open `http://localhost:4200` in your browser
 
+### Docker Compose (Coming Soon)
+```yaml
+# docker-compose.yml
+version: '3.8'
+services:
+  todo-app:
+    build: .
+    ports:
+      - "4200:4200"
+    environment:
+      - NODE_ENV=production
+```
+
 ## 📁 Project Structure
 
 ```
@@ -96,65 +114,152 @@ src/
 │   ├── todo-page/              # Main todo page component
 │   ├── utils/
 │   │   ├── Components/         # Reusable components
-│   │   │   ├── add-todo/       # Add todo component
-│   │   │   ├── navbar/         # Navigation component
-│   │   │   ├── todo-card/      # Todo item card component
-│   │   │   └── todo-list/      # Todo list component
-│   │   ├── Models/             # TypeScript interfaces
+│   │   │   ├── add-todo/       # Add todo form component
+│   │   │   ├── navbar/         # Navigation bar component
+│   │   │   ├── todo-card/      # Individual todo item card
+│   │   │   └── todo-list/      # Todo list container component
+│   │   ├── Models/             # TypeScript interfaces and types
 │   │   │   ├── TodoModel.ts    # Todo data model
-│   │   │   ├── TodoCardModel.ts # Todo card model
+│   │   │   ├── TodoCardModel.ts # Todo card display model
 │   │   │   └── UserModel.ts    # User data model
-│   │   └── Services/           # Angular services
-│   │       ├── CategoryMenager/
-│   │       ├── TodoManager/
-│   │       └── UserManager/
-│   ├── app.component.*         # Root component
-│   ├── app.config.ts          # App configuration
+│   │   └── Services/           # Angular services for business logic
+│   │       ├── CategoryMenager/ # Category management service
+│   │       ├── TodoManager/    # Todo CRUD operations service
+│   │       └── UserManager/    # User management service
+│   ├── app.component.*         # Root application component
+│   ├── app.config.ts          # Application configuration
 │   └── app.routes.ts          # Routing configuration
-├── styles.css                 # Global styles
-├── index.html                 # Main HTML file
-└── main.ts                    # Application bootstrap
+├── styles.css                 # Global application styles
+├── index.html                 # Main HTML template
+└── main.ts                    # Application bootstrap file
 ```
 
 ## 🎮 Usage
 
 ### Navigation
-- **Home Page**: Welcome page with project information
-- **Todo Page**: Main application interface for managing todos
+- **Home Page** (`/`): Welcome page with project information and getting started guide
+- **Todo Page** (`/todo`): Main application interface for managing your todo items
 
 ### Todo Management
-1. **Adding Todos**: Use the add todo form to create new tasks
-2. **Viewing Todos**: Browse your todo list with organized cards
-3. **Categories**: Organize todos by categories
-4. **Priorities**: Set priority levels for your tasks
+1. **Adding Todos**: 
+   - Click the "Add Todo" button
+   - Fill in the todo details (title, description, category, priority)
+   - Submit to add to your list
 
+2. **Managing Todos**: 
+   - View all todos in an organized card layout
+   - Edit todos by clicking the edit button
+   - Mark todos as complete/incomplete
+   - Delete todos when no longer needed
+
+3. **Categories**: 
+   - Organize todos by categories (Work, Personal, Shopping, etc.)
+   - Filter todos by category
+   - Create custom categories
+
+4. **Priorities**: 
+   - Set priority levels (High, Medium, Low)
+   - Sort todos by priority
+   - Visual indicators for priority levels
 
 ## 🔧 Development Scripts
 
-- `npm start` - Start development server
-- `npm run build` - Build for production
-- `npm run watch` - Build in watch mode
-- `npm test` - Run unit tests
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start development server with hot reload |
+| `npm run build` | Build the app for production |
+| `npm run watch` | Build in watch mode for development |
+| `npm test` | Run unit tests with Karma |
+| `npm run lint` | Run ESLint for code quality |
+| `npm run format` | Format code with Prettier |
+
+## 🧪 Testing
+
+```bash
+# Run unit tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+## 📸 Screenshots
+
+*Coming Soon - Screenshots of the application interface*
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow Angular style guide
+- Write unit tests for new features
+- Use conventional commit messages
+- Ensure code passes linting checks
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Port 4200 already in use:**
+```bash
+ng serve --port 4201
+```
+
+**Node modules issues:**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Angular CLI not found:**
+```bash
+npm install -g @angular/cli@19
+```
 
 ## 📝 License
 
-This project is for educational purposes and learning Angular development.
+This project is for educational purposes and learning Angular development. Feel free to use it as a reference for your own projects.
 
 ## 🎓 Learning Objectives
 
 This project demonstrates:
-- Modern Angular 19 features and best practices
-- Component-based architecture
-- TypeScript integration
-- Responsive design with Tailwind CSS
-- UI component libraries (PrimeNG)
-- Angular routing and navigation
-- Service-based architecture
-- Docker containerization
+- ✅ Modern Angular 19 features and best practices
+- ✅ Component-based architecture with proper separation of concerns
+- ✅ TypeScript integration with strong typing
+- ✅ Responsive design with Tailwind CSS utility classes
+- ✅ UI component libraries integration (PrimeNG)
+- ✅ Angular routing and navigation patterns
+- ✅ Service-based architecture for data management
+- ✅ Docker containerization for deployment
+- ✅ Modern development workflow and tooling
+
+## 🚧 Known Issues & Roadmap
+
+### Current Issues
+- ⚠️ **Authentication System**: Missing login and signup functionality
+- ⚠️ **Docker ARM64**: Docker build not functioning properly on ARM64 architecture (Apple Silicon)
+- ⚠️ **Error Feedback**: Missing comprehensive error handling and user feedback
+
+### Planned Features
+- 🔐 **User Authentication**: Complete login/signup system with JWT
+- 💾 **Backend Integration**: REST API with database persistence
+- 🔄 **Real-time Updates**: WebSocket integration for live updates
+- 📊 **Analytics Dashboard**: Todo completion statistics and insights
+- 🌙 **Dark Mode**: Theme switching capability
+- 📱 **PWA Support**: Progressive Web App features
+- 🔍 **Search & Filter**: Advanced search and filtering options
+- 📤 **Export/Import**: Todo data export and import functionality
 
 ---
 
-## Known issues/feature missing:
-- Missing a login and signup system (fully functional)
-- docker is not functioning on ARM64 Architecture
-- missing feedback errors
+**Built with ❤️ using Angular 19**
+
+*Last updated: December 2024*
