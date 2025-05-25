@@ -36,7 +36,7 @@ export async function getTodosWithoutToken() {
     }
 
     const pool = getPool();
-    const query = 'SELECT * FROM TodoTable join CategoryTable on TodoTable.category_id = CategoryTable.id where TodoTable.user_id = 1';
+    const query = 'SELECT * FROM TodoTable join CategoryTable on TodoTable.category_id = CategoryTable.id where TodoTable.user_id = 1 order by TodoTable.dueTime';
     try {
         const [rows] = await pool.query(query);
         // deno-lint-ignore no-explicit-any
@@ -82,7 +82,7 @@ export async function getTotalTodos() {
 
     try {
         const pool = getPool();
-        const query = 'SELECT COUNT(*) as total FROM TodoTable';
+        const query = 'SELECT COUNT(*) as total FROM TodoTable WHERE date(dueTime) >= CURDATE()';
         const [rows] = await pool.query(query);
         return rows;
     } catch (err) {

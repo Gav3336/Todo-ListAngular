@@ -28,8 +28,8 @@ export class AddTodoComponent {
 
   addTodo() {
     const dueTime = new Date(`${this.addTodoForm.value.dueDate} ${this.addTodoForm.value.dueTime}`);
-    console.log(dueTime);
-    console.log(this.addTodoForm.value);
+    console.log("dueTime", dueTime);
+    console.log("addTodoForm", this.addTodoForm.value);
 
     if (this.addTodoForm.invalid) {
       return;

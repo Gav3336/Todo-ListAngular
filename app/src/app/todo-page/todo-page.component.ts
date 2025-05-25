@@ -19,6 +19,8 @@ export class TodoPageComponent {
 
   categories = computed(() => this.#Category_manager.categories());
 
+  AvailableTodos = computed(() => this.#Todo_manager.todosComputed());
+
   today = new Date();
 
   totalTodos = computed(() => this.#Todo_manager.totalTodosComputed());

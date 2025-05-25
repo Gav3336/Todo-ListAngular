@@ -40,5 +40,4 @@ export class TodoListComponent {
       return todoDateStr > tomorrowDateStr;
     })
   );
-
 }

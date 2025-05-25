@@ -2,6 +2,7 @@
 <div class="space-y-4">
 
   <!-- Today's Tasks -->
+  @if (todayTasks().length > 0) {
   <div class="mb-8">
     <div class="flex items-center mb-4">
       <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Today</h3>
@@ -12,10 +13,11 @@
     @for (todo of todayTasks(); track $index) {
     <app-todo-card [data]="todo"></app-todo-card>
     }
-
   </div>
-
+  }
+  
   <!-- Tomorrow's Tasks -->
+  @if (tomorrowTasks().length > 0) {
   <div class="mb-8 mt-8">
     <div class="flex items-center mb-4">
       <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tomorrow</h3>
@@ -26,8 +28,11 @@
     @for (todo of tomorrowTasks(); track $index) {
     <app-todo-card [data]="todo"></app-todo-card>
     }
+  </div>
+  }
 
-    <!-- After Tomorrow's Tasks -->
+  <!-- After Tomorrow's Tasks -->
+  @if (afterTomorrowTasks().length > 0) {
     <div class="mb-8 mt-8">
       <div class="flex items-center mb-4">
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white">After Tomorrow</h3>
@@ -38,6 +43,4 @@
       <app-todo-card [data]="todo"></app-todo-card>
       }
     </div>
-  </div>
-
-</div>
+  }
