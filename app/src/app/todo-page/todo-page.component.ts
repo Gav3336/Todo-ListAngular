@@ -25,7 +25,7 @@ export class TodoPageComponent {
 
   totalTodos = computed(() => this.#Todo_manager.totalTodosComputed());
 
-  overdueTodos = computed(() => this.#Todo_manager.overdueTodosComputed().length);
+  overdueTodos = computed(() => this.#Todo_manager.overdueTodosComputed());
 
   completedTodos = computed(() => this.#Todo_manager.completedTodosComputed());
 

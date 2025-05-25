@@ -78,8 +78,8 @@ export async function createTodo(todo: TodoInterface) {
     try {
         const pool = getPool();
         const query = 'INSERT INTO TodoTable (title, description, category_id, priority, dueTime, user_id, isCompleted) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.user_id, false]);
-        return "Todo created successfully";
+        const result = await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.user_id, false]);
+        return result;
     } catch (err) {
         console.log(err);
         throw new Error("Error creating todo");

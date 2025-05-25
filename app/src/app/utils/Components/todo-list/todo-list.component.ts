@@ -19,7 +19,9 @@ export class TodoListComponent {
 
   todayTasks = computed(() =>
     this.#filteredTodos().filter(todo => {
-      const todoDateStr = new Date(todo.dueTime).toISOString().split('T')[0];
+      const todoDate = new Date(todo.dueTime);
+      if (isNaN(todoDate.getTime())) return false;
+      const todoDateStr = todoDate.toISOString().split('T')[0];
       const todayDateStr = this.today.toISOString().split('T')[0];
       return todoDateStr === todayDateStr;
     })
@@ -27,7 +29,9 @@ export class TodoListComponent {
 
   tomorrowTasks = computed(() =>
     this.#filteredTodos().filter(todo => {
-      const todoDateStr = new Date(todo.dueTime).toISOString().split('T')[0];
+      const todoDate = new Date(todo.dueTime);
+      if (isNaN(todoDate.getTime())) return false;
+      const todoDateStr = todoDate.toISOString().split('T')[0];
       const tomorrowDateStr = this.tomorrow.toISOString().split('T')[0];
       return todoDateStr === tomorrowDateStr;
     })
@@ -35,7 +39,9 @@ export class TodoListComponent {
 
   afterTomorrowTasks = computed(() =>
     this.#filteredTodos().filter(todo => {
-      const todoDateStr = new Date(todo.dueTime).toISOString().split('T')[0];
+      const todoDate = new Date(todo.dueTime);
+      if (isNaN(todoDate.getTime())) return false;
+      const todoDateStr = todoDate.toISOString().split('T')[0];
       const tomorrowDateStr = this.tomorrow.toISOString().split('T')[0];
       return todoDateStr > tomorrowDateStr;
     })

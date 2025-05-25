@@ -16,10 +16,10 @@ export class TodoManagerService {
   filteredTodos = signal<todoCardInterface[]>([]);
   filteredTodosComputed = computed(() => this.filteredTodos());
 
-  #overdueTodos = signal<todoCardInterface[]>([]);
+  #overdueTodos = signal<number>(0);
   overdueTodosComputed = computed(() => this.#overdueTodos());
 
-  #completedTodos = signal<todoCardInterface[]>([]);
+  #completedTodos = signal<number>(0);
   completedTodosComputed = computed(() => this.#completedTodos());
 
   #http = inject(HttpClient);
@@ -28,9 +28,6 @@ export class TodoManagerService {
 
   constructor() {
     this.TodoViaRestApi();
-    this.getTodosTotal();
-    this.getTodosOverdue();
-    this.getTodosCompleted();
   }
 
   TodoViaRestApi() {
@@ -38,6 +35,9 @@ export class TodoManagerService {
       next: (todos: any) => {
         this.todos.set(todos.message);
         this.filteredTodos.set(todos.message);
+        this.getTodosTotal();
+        this.getTodosOverdue();
+        this.getTodosCompleted();
       },
       error: (error: any) => {
         console.error('Error fetching todos:', error);
@@ -59,7 +59,10 @@ export class TodoManagerService {
   getTodosOverdue() {
     this.#http.get<any>(`${this.#link}/overdue`).subscribe({
       next: (todos: any) => {
-        this.#overdueTodos.set(todos.message);
+        this.#overdueTodos.set(todos.message[0].total);
+      },
+      error: (error: any) => {
+        console.error('Error fetching overdue todos:', error);
       }
     });
   }
@@ -77,9 +80,9 @@ export class TodoManagerService {
 
   addTodo(todo: TodoModel) {
     this.#http.post<any>(`${this.#link}`, todo).subscribe({
-      next: (todo: any) => {
-        this.todos.set([...this.todos(), todo.message]);
-        this.filteredTodos.set([...this.filteredTodos(), todo.message]);
+      next: (response: any) => {
+        this.TodoViaRestApi();
+        return "done";
       },
       error: (error: any) => {
         console.error('Error adding todo:', error);
@@ -103,6 +106,12 @@ export class TodoManagerService {
   completeTodo(id: number, isCompleted: boolean) {
     this.#http.put<any>(`${this.#link}/${id}/${isCompleted}`, { completed: isCompleted }).subscribe({
       next: (todo: any) => {
+        if (isCompleted) {
+          this.#completedTodos.set(this.#completedTodos() + 1);
+        } else {
+          this.#completedTodos.set(this.#completedTodos() - 1);
+        }
+
         return "done";
       },
       error: (error: any) => {

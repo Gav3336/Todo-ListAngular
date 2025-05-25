@@ -16,7 +16,6 @@ export class AddTodoComponent {
 
   #formBuilder = inject(FormBuilder);
 
-  // TODO: Add validation to not allow user to let empty fields
   addTodoForm = this.#formBuilder.group({
     title: new FormControl('', [Validators.required]),
     description: new FormControl(''),
@@ -26,11 +25,8 @@ export class AddTodoComponent {
     dueTime: new FormControl('', [Validators.required]),
   });
 
-  // TODO: resolve error on creating a todo with dueTime
   addTodo() {
     const dueTime = new Date(this.addTodoForm.value.dueDate + 'T' + this.addTodoForm.value.dueTime).toISOString();
-    console.log("dueTime", dueTime);
-    console.log("addTodoForm", this.addTodoForm.value);
 
     if (this.addTodoForm.invalid) {
       return;

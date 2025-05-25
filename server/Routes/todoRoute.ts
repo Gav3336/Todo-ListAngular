@@ -107,7 +107,7 @@ todo.post("/", async (c) => {
 
   try {
     const todo = await createTodo(parsedTodo.data);
-    return c.json({ message: "Todo created", data: todo });
+    return c.json({ message: todo });
   } catch (err) {
     console.log(err);
     return c.json({ message: (err as Error).message }, 500);
