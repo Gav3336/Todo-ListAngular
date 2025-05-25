@@ -65,15 +65,15 @@
       </button>
     </div>
     @if (data().isCompleted) {
-    <span
+    <span (click)="toggleCompletion()"
       class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
       Completed
     </span>
     }
     @else {
-    <button
+    <button (click)="toggleCompletion()"
       class="inline-flex items-center text-xs font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
-      (click)="toggleCompletion()">
+      >
       Mark Complete
     </button>
     }

@@ -45,7 +45,7 @@ export async function getTodosWithoutToken() {
         TodoTable.priority,
         TodoTable.dueTime,
         TodoTable.user_id,
-        TodoTable.completed,
+        TodoTable.isCompleted,
         CategoryTable.category_name as category_name
     FROM TodoTable
     JOIN CategoryTable ON CategoryTable.id = TodoTable.category_id
@@ -77,7 +77,7 @@ export async function createTodo(todo: TodoInterface) {
 
     try {
         const pool = getPool();
-        const query = 'INSERT INTO TodoTable (title, description, category_id, priority, dueTime, user_id, completed) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        const query = 'INSERT INTO TodoTable (title, description, category_id, priority, dueTime, user_id, isCompleted) VALUES (?, ?, ?, ?, ?, ?, ?)';
         await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.user_id, false]);
         return "Todo created successfully";
     } catch (err) {
@@ -140,8 +140,27 @@ export async function updateTodo(todoId: number, todo: TodoInterface) {
 
     try {
         const pool = getPool();
-        const query = 'UPDATE TodoTable SET title = ?, description = ?, category_id = ?, priority = ?, dueTime = ?, completed = ?, updatedAt = NOW() WHERE id = ?';
-        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.completed, todoId]);
+        const query = 'UPDATE TodoTable SET title = ?, description = ?, category_id = ?, priority = ?, dueTime = ?, isCompleted = ?, updatedAt = NOW() WHERE id = ?';
+        await pool.query(query, [todo.title, todo.description, todo.category_id, todo.priority, todo.dueTime, todo.isCompleted, todoId]);
+        return "Todo updated successfully";
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error updating todo");
+    }
+}
+
+export async function toggleCompletedTodo(todoId: number, isCompleted: string) {
+    try {
+        await createConnectionPool();
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error connecting to the database");
+    }
+
+    try {
+        const pool = getPool();
+        const query = 'UPDATE TodoTable SET isCompleted = ? WHERE id = ?';
+        await pool.query(query, [isCompleted === "true" ? 1 : 0, todoId]);
         return "Todo updated successfully";
     } catch (err) {
         console.log(err);

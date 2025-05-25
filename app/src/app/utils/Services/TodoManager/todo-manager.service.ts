@@ -85,6 +85,17 @@ export class TodoManagerService {
     });
   }
 
+  completeTodo(id: number, isCompleted: boolean) {
+    this.#http.put<any>(`${this.#link}/${id}/${isCompleted}`, { completed: isCompleted }).subscribe({
+      next: (todo: any) => {
+        return "done";
+      },
+      error: (error: any) => {
+        console.error('Error completing todo:', error);
+      }
+    });
+  }
+
 
   filterTodos(categoryId: number, priority: string) {
     this.filteredTodos.set(

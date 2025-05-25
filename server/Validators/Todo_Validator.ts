@@ -17,7 +17,7 @@ export const TodoValidator = z.object({
         return new Date(date).toISOString().slice(0, 19).replace('T', ' ');
     }),
     user_id: z.number().default(1),
-    completed: z.boolean().default(false),
+    isCompleted: z.boolean().default(false),
 });
 
 /**

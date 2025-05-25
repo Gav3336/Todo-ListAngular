@@ -17,6 +17,8 @@ export class TodoCardComponent {
 
   toggleCompletion() {
     this.data().isCompleted = !this.data().isCompleted;
+
+    this.#todoManager.completeTodo(this.data().id, this.data().isCompleted);
   }
 
   deleteTodo() {

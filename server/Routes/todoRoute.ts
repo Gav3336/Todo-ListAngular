@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { verifyJWT } from "../Handlers/jwtManager.ts";
-import { createTodo, deleteTodo, getOverdueTodos, getTodosWithToken, getTodosWithoutToken, getTotalTodos, updateTodo } from "../Handlers/mysql/TodoManager.ts";
+import { createTodo, deleteTodo, getOverdueTodos, getTodosWithToken, getTodosWithoutToken, getTotalTodos, toggleCompletedTodo, updateTodo } from "../Handlers/mysql/TodoManager.ts";
 import { Token } from "../Models/Token.ts";
 import { getCookie } from "hono/cookie";
 import { TodoValidator } from "../Validators/Todo_Validator.ts";
@@ -129,6 +129,24 @@ todo.put("/:todoId", async (c) => {
   const todo = await updateTodo(todoId, parsedTodo.data);
 
   return c.json({ message: "Todo updated", data: todo });
+});
+
+todo.put("/:todoId/:isCompleted", async (c) => {
+  const todoId = parseInt(c.req.param("todoId"));
+  const isCompleted = c.req.param("isCompleted");
+
+  if(isCompleted !== "true" && isCompleted !== "false") {
+    return c.json({ message: "Invalid isCompleted value" }, 400);
+  }
+  
+  if (isNaN(todoId)) {
+    return c.json({ message: "Invalid todo ID" }, 400);
+  }
+
+  await toggleCompletedTodo(todoId, isCompleted);
+
+  return c.json({ message: "Todo updated", data: "Todo updated" });
+  
 });
 
 
