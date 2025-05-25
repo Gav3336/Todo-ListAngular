@@ -27,7 +27,7 @@ export async function getTodosWithToken(token: Token) {
  * This function is used to get all todos without a token
  * @returns the todos
  */
-export async function getTodosWithoutToken() {
+export async function getTodosWithoutToken(page: number) {
     try {
         await createConnectionPool();
     } catch (err) {
@@ -49,10 +49,12 @@ export async function getTodosWithoutToken() {
         CategoryTable.category_name as category_name
     FROM TodoTable
     JOIN CategoryTable ON CategoryTable.id = TodoTable.category_id
-    WHERE TodoTable.user_id = 1
-    ORDER BY TodoTable.dueTime`;
+    WHERE TodoTable.user_id = 1 AND date(TodoTable.dueTime) >= CURDATE()
+    ORDER BY TodoTable.dueTime
+    LIMIT 20 OFFSET ?
+    `;
     try {
-        const [rows] = await pool.query(query);
+        const [rows] = await pool.query(query, [page]);
         // deno-lint-ignore no-explicit-any
         const todos = rows as Array<any>;
         return todos;

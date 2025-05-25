@@ -37,9 +37,14 @@ todo.get("/", async (c) => {
  * This method is used to get all todos without a token
  * @returns the todos
  */
-todo.get("/all", async (c) => {
+todo.get("/all/:page", async (c) => {
+  const pageParam = c.req.param("page");
+  
+  const page = parseInt(pageParam) || 0;
+  console.log(page);
+
   try {
-    const todos = await getTodosWithoutToken();
+    const todos = await getTodosWithoutToken(page);
     return c.json({ message: todos });
   } catch (err) {
     console.log(err);

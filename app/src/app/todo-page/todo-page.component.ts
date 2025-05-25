@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { TodoListComponent } from "../utils/Components/todo-list/todo-list.component";
 import { AddTodoComponent } from "../utils/Components/add-todo/add-todo.component";
 import { TodoManagerService } from '../utils/Services/TodoManager/todo-manager.service';
@@ -29,10 +29,17 @@ export class TodoPageComponent {
 
   completedTodos = computed(() => this.#Todo_manager.completedTodosComputed());
 
+  page = signal<number>(0);
+
   filterForm = new FormGroup({
     categoryId: new FormControl(0),
     priority: new FormControl('')
   });
+
+  addPage() {
+    this.page.set(this.page() + 1);
+    this.#Todo_manager.TodoViaRestApi(this.page());
+  }
 
   filterTodos() {
     this.#Todo_manager.filterTodos(this.filterForm.value.categoryId as number, this.filterForm.value.priority as string);

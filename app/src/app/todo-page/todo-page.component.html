@@ -83,7 +83,7 @@
 
         <!-- Load More Todos -->
         @if (AvailableTodos() && AvailableTodos().length < totalTodos()) { <div class="text-center">
-          <button
+          <button (click)="addPage()"
             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-emerald-700 bg-emerald-100 hover:bg-emerald-200 dark:text-emerald-200 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
             Load More Tasks
             <svg class="ml-2 -mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

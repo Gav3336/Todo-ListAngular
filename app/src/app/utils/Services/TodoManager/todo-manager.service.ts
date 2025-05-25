@@ -30,11 +30,11 @@ export class TodoManagerService {
     this.TodoViaRestApi();
   }
 
-  TodoViaRestApi() {
-    this.#http.get<any>(`${this.#link}/all`).subscribe({
+  TodoViaRestApi(page = 0) {
+    this.#http.get<any>(`${this.#link}/all/${page}`).subscribe({
       next: (todos: any) => {
-        this.todos.set(todos.message);
-        this.filteredTodos.set(todos.message);
+        this.todos.set([...this.todos(), ...todos.message]);
+        this.filteredTodos.set([...this.filteredTodos(), ...todos.message]);
         this.getTodosTotal();
         this.getTodosOverdue();
         this.getTodosCompleted();
@@ -122,6 +122,11 @@ export class TodoManagerService {
 
 
   filterTodos(categoryId: number, priority: string) {
+    if (categoryId == null && priority == null) {
+      this.filteredTodos.set(this.todos());
+      return;
+    }
+
     this.filteredTodos.set(
       this.todos().filter(todo => {
         const matches = (categoryId == 0 || todo.category_id == categoryId) &&
