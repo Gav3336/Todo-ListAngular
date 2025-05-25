@@ -4,6 +4,7 @@ export interface todoCardInterface {
   description: string;
   category_name: string;
   category_id: number;
+  user_id: number;
 
   dueDate: string;
   dueTime: string;

@@ -73,7 +73,6 @@ export class TodoManagerService {
   }
 
   deleteTodo(id: number) {
-    console.log("id", id);
     this.#http.delete<any>(`${this.#link}/${id}`).subscribe({
       next: (todo: any) => {
         this.todos.set(this.todos().filter(todo => todo.id !== id));
@@ -87,14 +86,11 @@ export class TodoManagerService {
   }
 
 
-  // TODO: make category_id accessible in the todoCardInterface
   filterTodos(categoryId: number, priority: string) {
-    // console.log(this.todos().category_id);
     this.filteredTodos.set(
       this.todos().filter(todo => {
-        const matches = (categoryId === 0 || todo.category_id === categoryId) &&
+        const matches = (categoryId == 0 || todo.category_id == categoryId) &&
           (priority === '' || todo.priority.toUpperCase() === priority.toUpperCase());
-        console.log('Todo:', todo, 'Matches:', matches);
         return matches;
       })
     );
