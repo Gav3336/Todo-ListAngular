@@ -105,6 +105,25 @@ export async function getTotalTodos() {
     }
 }
 
+export async function getOverdueTodos() {
+    try {
+        await createConnectionPool();
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error connecting to the database");
+    }
+
+    try {
+        const pool = getPool();
+        const query = 'SELECT COUNT(*) as total FROM TodoTable WHERE date(dueTime) < CURDATE() and user_id = 1';
+        const [rows] = await pool.query(query);
+        return rows;
+    } catch (err) {
+        console.log(err);
+        throw new Error("Error fetching overdue todos");
+    }
+}
+
 /**
  * This function is used to update a todo
  * @param todoId the id of the todo to update
