@@ -25,6 +25,10 @@ export class TodoPageComponent {
 
   totalTodos = computed(() => this.#Todo_manager.totalTodosComputed());
 
+  // TODO: manage the increasing overdueTodos limit response from the backend (the limit is 100 and with every overdue todo the showed todo will decrease)
+  // Make so the database manages the overdue todos and the limit.
+  overdueTodos = computed(() => this.#Todo_manager.todosComputed().filter(todo => new Date(todo.dueTime) < new Date()));
+
   filterForm = new FormGroup({
     categoryId: new FormControl(0),
     priority: new FormControl('')

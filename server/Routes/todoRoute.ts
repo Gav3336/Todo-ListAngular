@@ -129,6 +129,7 @@ todo.put("/:todoId", async (c) => {
  * @returns the todo deleted
  */
 todo.delete("/:todoId", async (c) => {
+  console.log("delete todo");
   const todoId = parseInt(c.req.param("todoId"));
 
   if (isNaN(todoId)) {

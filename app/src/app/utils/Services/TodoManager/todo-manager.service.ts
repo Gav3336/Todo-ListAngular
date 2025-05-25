@@ -10,8 +10,8 @@ export class TodoManagerService {
   todos = signal<todoCardInterface[]>([]);
   todosComputed = computed(() => this.todos());
 
-  totalTodos = signal<number>(0);
-  totalTodosComputed = computed(() => this.totalTodos());
+  #totalTodos = signal<number>(0);
+  totalTodosComputed = computed(() => this.#totalTodos());
 
   filteredTodos = signal<todoCardInterface[]>([]);
   filteredTodosComputed = computed(() => this.filteredTodos());
@@ -40,7 +40,7 @@ export class TodoManagerService {
   getTodosTotal() {
     this.#http.get<any>(`${this.#link}/total`).subscribe({
       next: (todos: any) => {
-        this.totalTodos.set(todos.message[0].total);
+        this.#totalTodos.set(todos.message[0].total);
       },
       error: (error: any) => {
         console.error('Error fetching todos:', error);
@@ -56,6 +56,20 @@ export class TodoManagerService {
       },
       error: (error: any) => {
         console.error('Error adding todo:', error);
+      }
+    });
+  }
+
+  deleteTodo(id: number) {
+    console.log("id", id);
+    this.#http.delete<any>(`${this.#link}/${id}`).subscribe({
+      next: (todo: any) => {
+        this.todos.set(this.todos().filter(todo => todo.id !== id));
+        this.#totalTodos.set(this.#totalTodos() - 1);
+        this.filteredTodos.set(this.filteredTodos().filter(todo => todo.id !== id));
+      },
+      error: (error: any) => {
+        console.error('Error deleting todo:', error);
       }
     });
   }
