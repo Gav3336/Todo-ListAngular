@@ -26,8 +26,9 @@ export class AddTodoComponent {
     dueTime: new FormControl('', [Validators.required]),
   });
 
+  // TODO: resolve error on creating a todo with dueTime
   addTodo() {
-    const dueTime = new Date(`${this.addTodoForm.value.dueDate} ${this.addTodoForm.value.dueTime}`);
+    const dueTime = new Date(this.addTodoForm.value.dueDate + 'T' + this.addTodoForm.value.dueTime).toISOString();
     console.log("dueTime", dueTime);
     console.log("addTodoForm", this.addTodoForm.value);
 
