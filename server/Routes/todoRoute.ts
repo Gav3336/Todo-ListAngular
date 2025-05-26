@@ -17,13 +17,11 @@ export const todo = new Hono();
  */
 todo.get("/", async (c) => {
   const userToken = getCookie(c, "Authorization");
-  console.log(userToken);
 
   if (!userToken) return c.json({ message: "Token is required" }, 401);
 
   try {
     const decoded = await verifyJWT(userToken);
-    console.log(decoded);
     const todos = await getTodosWithToken(decoded as Token);
     return c.json({ message: todos });
   } catch (err) {
@@ -41,7 +39,6 @@ todo.get("/all/:page", async (c) => {
   const pageParam = c.req.param("page");
   
   const page = parseInt(pageParam) || 0;
-  console.log(page);
 
   try {
     const todos = await getTodosWithoutToken(page);
@@ -91,8 +88,6 @@ todo.get("/completed", async (c) => {
 todo.post("/", async (c) => {
   // const userId = c.req.param("userId");
   const todoData = await c.req.json();
-
-  console.log(todoData);
 
   // force the user_id to be 1 for the moment since there isn't a way to login or register
   todoData.user_id = 1;
@@ -172,7 +167,6 @@ todo.put("/:todoId/:isCompleted", async (c) => {
  * @returns the todo deleted
  */
 todo.delete("/:todoId", async (c) => {
-  console.log("delete todo");
   const todoId = parseInt(c.req.param("todoId"));
 
   if (isNaN(todoId)) {
