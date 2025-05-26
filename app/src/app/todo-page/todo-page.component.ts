@@ -5,18 +5,20 @@ import { TodoManagerService } from '../utils/Services/TodoManager/todo-manager.s
 import { CategoryManagerService } from '../utils/Services/CategoryMenager/category-manager.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from "../utils/Components/navbar/navbar.component";
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-todo-page',
   standalone: true,
   imports: [TodoListComponent, AddTodoComponent, ReactiveFormsModule, NavbarComponent],
+  providers: [MessageService],
   templateUrl: './todo-page.component.html',
   styleUrl: './todo-page.component.css'
 })
 export class TodoPageComponent {
   #Todo_manager = inject(TodoManagerService);
   #Category_manager = inject(CategoryManagerService);
-
+  messageService = inject(MessageService);
   categories = computed(() => this.#Category_manager.categories());
 
   AvailableTodos = computed(() => this.#Todo_manager.todosComputed());
@@ -42,7 +44,11 @@ export class TodoPageComponent {
   }
 
   filterTodos() {
-    this.#Todo_manager.filterTodos(this.filterForm.value.categoryId as number, this.filterForm.value.priority as string);
+    try {
+      this.#Todo_manager.filterTodos(this.filterForm.value.categoryId as number, this.filterForm.value.priority as string);
+    } catch (error) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error as string, life: 300 });
+    }
   }
 
   resetFilters() {
