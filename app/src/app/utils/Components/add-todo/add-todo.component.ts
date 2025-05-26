@@ -47,6 +47,7 @@ export class AddTodoComponent {
       priority: this.addTodoForm.value.priority as string,
         dueTime: dueTime
       });
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Todo added successfully', life: 300 });
     } catch (error) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error as string, life: 300 });
     }
