@@ -1,0 +1,97 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- Header with Navigation -->
+  <app-navbar></app-navbar>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="lg:flex lg:gap-8">
+      <!-- Left Side: New Task Form and Filters -->
+      <div class="lg:w-1/3 mb-6 lg:mb-0">
+        <app-add-todo></app-add-todo>
+
+        <!-- Filters and Sorting -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Filters</h2>
+
+          <!-- Filter Options -->
+          <form [formGroup]="filterForm">
+            <div class="mb-4">
+              <label for="filter-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Filter by Category
+              </label>
+              <select id="filter-category" formControlName="categoryId"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white">
+                <option value="0">All Categories</option>
+                @for (category of categories(); track $index) {
+                <option [value]="category.id">{{category.category_name}}</option>
+                }
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label for="filter-priority"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Filter
+                by Priority</label>
+              <select id="filter-priority" formControlName="priority"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white">
+                <option value="">All Priorities</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </form>
+
+          <div class="flex items-center mt-4 border-t dark:border-gray-700 pt-4">
+            <button (click)="resetFilters()"
+              class="flex-1 py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+              Reset Filters
+            </button>
+            <button (click)="filterTodos()"
+              class="flex-1 ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Task Cards -->
+      <div class="lg:w-2/3">
+
+        <!-- Task Summary Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tasks</div>
+            <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">{{totalTodos()}}</div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Completed</div>
+            <div class="mt-1 text-2xl font-semibold text-emerald-600 dark:text-emerald-400">{{completedTodos()}}</div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-400">In Progress</div>
+            <div class="mt-1 text-2xl font-semibold text-blue-600 dark:text-blue-400">-</div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Overdue</div>
+            <div class="mt-1 text-2xl font-semibold text-red-600 dark:text-red-400">{{overdueTodos()}}</div>
+          </div>
+        </div>
+
+
+        <app-todo-list></app-todo-list>
+
+        <!-- Load More Todos -->
+        @if (AvailableTodos() && AvailableTodos().length < totalTodos()) { <div class="text-center">
+          <button (click)="addPage()"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-emerald-700 bg-emerald-100 hover:bg-emerald-200 dark:text-emerald-200 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+            Load More Tasks
+            <svg class="ml-2 -mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+      </div>
+      }
+    </div>
+</div>

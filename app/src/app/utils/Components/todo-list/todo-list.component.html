@@ -1,0 +1,46 @@
+<!-- Task Cards -->
+<div class="space-y-4">
+
+  <!-- Today's Tasks -->
+  @if (todayTasks().length > 0) {
+  <div class="mb-8">
+    <div class="flex items-center mb-4">
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Today</h3>
+      <div class="ml-2 text-sm text-gray-500 dark:text-gray-400">{{today | date:'fullDate'}}</div>
+      <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">{{todayTasks().length}} tasks</div>
+    </div>
+
+    @for (todo of todayTasks(); track $index) {
+    <app-todo-card [data]="todo"></app-todo-card>
+    }
+  </div>
+  }
+  
+  <!-- Tomorrow's Tasks -->
+  @if (tomorrowTasks().length > 0) {
+  <div class="mb-8 mt-8">
+    <div class="flex items-center mb-4">
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tomorrow</h3>
+      <div class="ml-2 text-sm text-gray-500 dark:text-gray-400">{{tomorrow | date:'fullDate'}}</div>
+      <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">{{tomorrowTasks().length}} tasks</div>
+    </div>
+
+    @for (todo of tomorrowTasks(); track $index) {
+    <app-todo-card [data]="todo"></app-todo-card>
+    }
+  </div>
+  }
+
+  <!-- After Tomorrow's Tasks -->
+  @if (afterTomorrowTasks().length > 0) {
+    <div class="mb-8 mt-8">
+      <div class="flex items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">After Tomorrow</h3>
+        <div class="ml-auto text-sm font-medium text-gray-600 dark:text-gray-300">{{afterTomorrowTasks().length}} tasks</div>
+      </div>
+
+      @for (todo of afterTomorrowTasks(); track $index) {
+      <app-todo-card [data]="todo"></app-todo-card>
+      }
+    </div>
+  }
