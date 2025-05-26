@@ -45,7 +45,7 @@ Before running this application, make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Gav3336/Todo-ListAngular.git
 cd Todo-ListAngular
 ```
 
